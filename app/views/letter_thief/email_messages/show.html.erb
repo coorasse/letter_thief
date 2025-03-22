@@ -1,0 +1,115 @@
+<p><a href="<%= letter_thief.email_messages_path %>">&larr; Back to Inbox 📬</a></p>
+
+<section id="message_headers">
+  <dl>
+    <dt>Intercepted at:</dt>
+    <dd><%= @email.intercepted_at.strftime("%b %e, %Y %I:%M %p") %></dd>
+    <% if @email.from.present? %>
+      <dt>From:</dt>
+      <dd><%= @email.from.join(", ") %></dd>
+    <% end %>
+
+    <% if @email.sender.present? %>
+      <dt>Sender:</dt>
+      <dd><%= @email.sender.join(", ") %></dd>
+    <% end %>
+
+    <% if @email.to.present? %>
+      <dt>To:</dt>
+      <dd><%= @email.to.join(", ") %></dd>
+    <% end %>
+
+    <dt>Subject:</dt>
+    <dd><strong><%= h(@email.subject || "(no subject)") %></strong></dd>
+
+    <% if @email.cc.present? %>
+      <dt>CC:</dt>
+      <dd><%= @email.cc.join(", ") %></dd>
+    <% end %>
+
+    <% if @email.bcc.present? %>
+      <dt>BCC:</dt>
+      <dd><%= @email.bcc.join(", ") %></dd>
+    <% end %>
+  </dl>
+</section>
+
+<hr>
+
+<% if @email.multipart? %>
+  <nav>
+    <ul>
+      <li data-version-toggle="html" style="display: none">
+        <a href="#" role="button" class="outline">View HTML version</a></li>
+      <li data-version-toggle="text"><a href="#" role="button" class="outline">View plain text version</a></li>
+    </ul>
+  </nav>
+<% end %>
+
+<section id="email_body">
+  <% if @email.body_text.present? %>
+    <% if @email.rich? %>
+      <iframe
+        id="text-version"
+        class="email-version"
+        srcdoc="<base target='_top'><%= h(@email.body_text) %>">
+      </iframe>
+    <% else %>
+      <pre class="email-version" id="text-version" style="display: <%= @email.multipart? ? 'none' : 'block' %>"><%= h(@email.body_text) %></pre>
+    <% end %>
+  <% end %>
+
+  <% if @email.body_html.present? %>
+    <iframe
+      id="html-version"
+      class="email-version"
+      srcdoc="<base target='_top'><%= h(@email.body_html) %>">
+    </iframe>
+  <% end %>
+</section>
+
+<script>
+    function toggleVersions(version, otherVersion) {
+        document.querySelector(`[data-version-toggle="${version}"]`).addEventListener('click', event => {
+            event.preventDefault()
+            document.querySelector(`[data-version-toggle="${version}"]`).style.display = "none";
+            document.querySelector(`[data-version-toggle="${otherVersion}"]`).style.display = "block";
+
+            document.getElementById(`${version}-version`).style.display = 'block'
+            document.getElementById(`${otherVersion}-version`).style.display = 'none'
+        });
+    }
+
+    toggleVersions("text", "html");
+    toggleVersions("html", "text");
+</script>
+
+<style>
+    #message_headers {
+        dt {
+            color: #7f7f7f;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        dl {
+            display: grid;
+            grid-template-columns: max-content auto;
+            row-gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    pre {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        white-space: pre-wrap;
+        font-family: monospace;
+    }
+
+    iframe {
+        border: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>

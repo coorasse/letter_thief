@@ -1,0 +1,26 @@
+<h1>📬 Intercepted Emails</h1>
+
+<table role="grid">
+  <thead>
+  <tr>
+    <th>From</th>
+    <th>To</th>
+    <th>Subject</th>
+    <th>Time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @emails.each do |email| %>
+    <tr>
+      <td><%= email.from&.join(", ") %></td>
+      <td><%= email.to&.join(", ") %></td>
+      <td>
+        <a href="<%= letter_thief.email_message_path(email) %>">
+          <%= email.subject.presence || "(no subject)" %>
+        </a>
+      </td>
+      <td><%= email.intercepted_at.strftime("%Y-%m-%d %H:%M") %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
