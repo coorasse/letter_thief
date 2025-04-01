@@ -57,6 +57,12 @@ authenticate :user, ->(user) { sys_manager&.administrator? } do
 end
 ```
 
+Add the interceptor to your environment configuration files to start persisting your sent emails:
+
+```ruby
+config.action_mailer.interceptors = [LetterThief::Interceptor]
+```
+
 If you want to stop sending emails, you can use it also as delivery method:
 
 ```ruby
