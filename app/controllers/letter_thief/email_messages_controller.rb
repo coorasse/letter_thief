@@ -6,6 +6,7 @@ module LetterThief
 
     content_security_policy do |policy|
       policy.style_src :self, :https, :unsafe_inline
+      policy.content_security_policy_nonce_directives = []
     end
 
     PAGE_SIZE = 20
