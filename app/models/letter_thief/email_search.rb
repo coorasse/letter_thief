@@ -42,7 +42,7 @@ module LetterThief
     private
 
     def parse_datetime(value)
-      DateTime.parse(value) if value.present?
+      Time.zone.parse(value) if value.present?
     rescue ArgumentError
       nil
     end
