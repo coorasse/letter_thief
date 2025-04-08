@@ -1,0 +1,9 @@
+<%# locals:(email_message:) %>
+<tr>
+  <td><%= email_message.from&.join(", ") %></td>
+  <td><%= email_message.to&.join(", ") %></td>
+  <td><%= link_to email_message.subject.presence || "(no subject)", email_message_path(email_message) %></td>
+  <td><%= email_message.intercepted_at.strftime("%Y-%m-%d %H:%M") %></td>
+  <td><%= number_to_human_size(email_message.raw_email.byte_size) %></td>
+  <td><%= button_to 'Delete', email_message_path(email_message), method: :delete, class: 'outline contrast' %></td>
+</tr>
