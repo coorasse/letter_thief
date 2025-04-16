@@ -5,9 +5,7 @@ module LetterThief
     layout "letter_thief/application"
 
     before_action :turn_off_csp_nonce_generation
-    
     before_action :set_email, only: [:show, :destroy]
-    
 
     content_security_policy do |policy|
       policy.style_src :self, :https, :unsafe_inline
