@@ -3,6 +3,8 @@
 module LetterThief
   class EmailMessagesController < ApplicationController
     layout "letter_thief/application"
+
+    before_action :turn_off_csp_nonce_generation
     before_action :set_email, only: [:show, :destroy]
 
     content_security_policy do |policy|
@@ -26,6 +28,12 @@ module LetterThief
 
     def set_email
       @email = EmailMessage.find(params[:id])
+    end
+
+    private
+
+    def turn_off_csp_nonce_generation
+      request.content_security_policy_nonce_directives = []
     end
   end
 end
