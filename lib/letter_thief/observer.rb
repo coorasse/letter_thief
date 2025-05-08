@@ -1,6 +1,6 @@
 module LetterThief
-  class Interceptor
-    def self.delivering_email(mail)
+  class Observer
+    def self.delivered_email(mail)
       string_io = StringIO.new(mail.to_s)
       email = EmailMessage.create!(
         to: mail.to,
