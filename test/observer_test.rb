@@ -1,7 +1,7 @@
 require "test_helper"
 
 module LetterThief
-  class InterceptorTest < ActiveSupport::TestCase
+  class ObserverTest < ActiveSupport::TestCase
     test "creates an EmailMessage from a basic email" do
       mail = Mail.new do
         from "sender@example.com"
@@ -11,7 +11,7 @@ module LetterThief
       end
 
       assert_difference -> { EmailMessage.count }, 1 do
-        Interceptor.delivering_email(mail)
+        Observer.delivered_email(mail)
       end
 
       email = EmailMessage.last
@@ -41,7 +41,7 @@ module LetterThief
         end
       end
 
-      Interceptor.delivering_email(mail)
+      Observer.delivered_email(mail)
       email = EmailMessage.last
 
       assert_equal "Plain version", email.body_text
@@ -58,7 +58,7 @@ module LetterThief
         add_file(filename: "test.txt", content: "This is a test file")
       end
 
-      Interceptor.delivering_email(mail)
+      Observer.delivered_email(mail)
 
       email = EmailMessage.last
       assert_equal email.attachments.length, 1
