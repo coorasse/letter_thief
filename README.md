@@ -52,7 +52,7 @@ Mount the engine in your routes, protecting it.
 The code below might be different depending on how you authenticate your users.
 
 ```ruby
-authenticate :user, ->(user) { sys_manager&.administrator? } do
+authenticate :user, ->(user) { user&.administrator? } do
   mount LetterThief::Engine => "/letter_thief"
 end
 ```
