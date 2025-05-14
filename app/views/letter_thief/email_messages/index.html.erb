@@ -47,22 +47,11 @@
       <th>Subject</th>
       <th>Time</th>
       <th>Size</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
-    <% @search.results.each do |email| %>
-      <tr>
-        <td><%= email.from&.join(", ") %></td>
-        <td><%= email.to&.join(", ") %></td>
-        <td>
-          <a href="<%= email_message_path(email) %>">
-            <%= email.subject.presence || "(no subject)" %>
-          </a>
-        </td>
-        <td><%= email.intercepted_at.strftime("%Y-%m-%d %H:%M") %></td>
-        <td><%= number_to_human_size(email.raw_email.byte_size) %></td>
-      </tr>
-    <% end %>
+      <%= render @search.results %>
     </tbody>
   </table>
 
