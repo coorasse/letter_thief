@@ -27,7 +27,7 @@ module LetterThief
     test "#index" do
       get email_messages_url
       assert_response :success
-      assert_select 'table', 1, "Should have a table to display emails"
+      assert_select "table", 1, "Should have a table to display emails"
     end
 
     test "#show" do
@@ -45,12 +45,12 @@ module LetterThief
 
     test "#destroy_all" do
       assert_equal 2, EmailMessage.count, "Should have 2 emails before destroy_all"
-      
+
       delete destroy_all_email_messages_url
-      
+
       assert_redirected_to email_messages_path
       assert_equal 0, EmailMessage.count, "Should have no emails after destroy_all"
-      assert_equal 'All email messages have been deleted', flash[:notice]
+      assert_equal "All email messages have been deleted", flash[:notice]
     end
   end
 end

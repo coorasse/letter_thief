@@ -26,7 +26,7 @@ module LetterThief
 
     def destroy_all
       EmailMessage.destroy_all
-      redirect_to email_messages_path, notice: 'All email messages have been deleted'
+      redirect_to email_messages_path, notice: "All email messages have been deleted"
     end
 
     private
