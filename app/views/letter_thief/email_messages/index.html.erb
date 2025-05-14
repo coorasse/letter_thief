@@ -1,9 +1,15 @@
 <% content_for :title, "Letter Thief" %>
 
 <h1>📬 Intercepted Emails (Outbox)</h1>
+
 <p>
-  Currently occupying <%= number_to_human_size(LetterThief.used_activestorage_space)%>
+  <% if LetterThief.activestorage_available? %>
+    Currently occupying <%= number_to_human_size(LetterThief.used_activestorage_space)%>
+  <% else %>
+    Attachments are not saved. In order to save the attachments you need to setup ActiveStorage.
+  <% end %>
 </p>
+
 <form method="get" style="margin-bottom: 1rem;">
   <fieldset class="grid">
     <label>

@@ -11,4 +11,9 @@ module LetterThief
         record_type: "LetterThief::EmailMessage"
       }).sum(:byte_size)
   end
+
+  def self.activestorage_available?
+    defined?(ActiveStorage) &&
+    ActiveRecord::Base.connection.table_exists?('active_storage_attachments')
+  end
 end

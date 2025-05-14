@@ -4,8 +4,10 @@ module LetterThief
 
     connects_to(**LetterThief.connects_to) if LetterThief.connects_to
 
-    has_many_attached :attachments
-    has_one_attached :raw_email
+    if LetterThief.activestorage_available?
+      has_many_attached :attachments
+      has_one_attached :raw_email
+    end
 
     unless ActiveRecord::Base.connection.adapter_name.downcase.include?("postgresql")
       serialize :to, coder: JSON, type: Array

@@ -4,6 +4,11 @@
 * Add basic tasks for cleaning up
 * Run tests on different ruby/rails/database combinations
 
+# 0.3.0
+
+* Switch from interceptors to observers
+* Support apps without ActiveStorage (no attachments persisted)
+
 # 0.2.0
 
 * Breaking change: dropped raw_message in favour of a separate attachment. Remove the column if you are migrating from a
