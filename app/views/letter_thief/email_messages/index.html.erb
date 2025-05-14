@@ -41,7 +41,6 @@
   </fieldset>
 </form>
 
-
 <% if @search.total_count > 0 %>
   <p><%= pluralize(@search.total_count, "email") %> found</p>
 
@@ -88,6 +87,22 @@
       <% end %>
     </ul>
   </nav>
+
+  <%= button_to "Delete All Messages",
+      destroy_all_email_messages_path,
+      method: :delete,
+      class: "secondary outline",        
+      onclick: "return confirmDeleteAll(event)" %>
+
+  <script>
+    function confirmDeleteAll(event) {
+      event.preventDefault();
+      if (window.confirm('Are you sure you want to delete all messages? This action cannot be undone.')) {
+        event.target.closest('form').submit();
+      }
+      return false;
+    }
+  </script>
 <% else %>
   <p>No emails found.</p>
 <% end %>

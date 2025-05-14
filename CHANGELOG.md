@@ -8,6 +8,7 @@
 
 * Switch from interceptors to observers
 * Support apps without ActiveStorage (no attachments persisted)
+* Add button to delete all messages
 
 # 0.2.0
 
