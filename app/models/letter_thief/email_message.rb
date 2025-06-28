@@ -30,7 +30,7 @@ module LetterThief
     end
 
     def save_attachment(attachment)
-      ar_attachment = attachment.attach(
+      ar_attachment = attachments.attach(
         io: StringIO.new(attachment.body.decoded),
         filename: attachment.filename,
         content_type: attachment.mime_type
