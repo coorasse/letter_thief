@@ -61,7 +61,7 @@ module LetterThief
       Observer.delivered_email(mail)
 
       email = EmailMessage.last
-      assert_equal email.attachments.length, 1
+      assert_equal(email.attachments.length, 1) if LetterThief.activestorage_available?
       assert email.raw_email.present?
     end
   end
