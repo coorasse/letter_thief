@@ -4,6 +4,7 @@ module LetterThief
 
     connects_to(**LetterThief.connects_to) if LetterThief.connects_to
 
+    puts "is activestorage available? #{LetterThief.activestorage_available?}"
     if LetterThief.activestorage_available?
       has_many_attached :attachments
       has_one_attached :raw_email
