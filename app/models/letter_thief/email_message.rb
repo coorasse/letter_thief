@@ -4,8 +4,13 @@ module LetterThief
 
     connects_to(**LetterThief.connects_to) if LetterThief.connects_to
 
-    puts "is activestorage available? #{LetterThief.activestorage_available?}"
-    if LetterThief.activestorage_available?
+    puts "is activestorage available? #{ActiveRecord::Base.connection.table_exists?("active_storage_attachments")}"
+
+    puts "Adapter: #{ActiveRecord::Base.connection.adapter_name}"
+    puts "Database: #{ActiveRecord::Base.connection.current_database rescue 'N/A'}"
+    puts "Config: #{ActiveRecord::Base.connection_db_config.inspect}"
+    puts "Tables: #{ActiveRecord::Base.connection.tables.inspect}"
+    if ActiveRecord::Base.connection.table_exists?("active_storage_attachments")
       has_many_attached :attachments
       has_one_attached :raw_email
     end
