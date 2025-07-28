@@ -13,7 +13,6 @@ module LetterThief
   end
 
   def self.activestorage_available?
-    defined?(ActiveStorage) &&
-      ActiveRecord::Base.connection.table_exists?("active_storage_attachments")
+    defined?(ActiveStorage) && ActiveRecord::Base.connection.table_exists?("active_storage_attachments")
   end
 end
