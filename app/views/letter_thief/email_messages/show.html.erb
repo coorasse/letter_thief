@@ -52,7 +52,7 @@
   <% end %>
 </section>
 
-<% if !LetterThief.activestorage_available? %>
+<% if !@email.respond_to?(:attachments) %>
   <p>Attachments are not saved. In order to save the attachments you need to setup ActiveStorage.</p>
 <% end %>
 
