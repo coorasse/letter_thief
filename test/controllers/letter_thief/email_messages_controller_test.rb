@@ -13,7 +13,9 @@ module LetterThief
         from: ["alice@example.com"],
         to: ["bob@example.com"],
         subject: "Important news",
-        intercepted_at: Time.utc(2024, 1, 1, 10)
+        intercepted_at: Time.utc(2024, 1, 1, 10),
+        body_text: "Email content",
+        body_html: "<p>Email content</p>"
       )
 
       @email2 = EmailMessage.create!(

@@ -16,7 +16,7 @@ module LetterThief
         intercepted_at: Time.current
       )
 
-      if LetterThief.activestorage_available?
+      if email.respond_to?(:attachments)
         Array(mail.attachments).each do |attachment|
           ar_attachment = email.attachments.attach(
             io: StringIO.new(attachment.body.decoded),

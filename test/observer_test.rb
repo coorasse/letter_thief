@@ -49,20 +49,22 @@ module LetterThief
       assert mail.multipart?
     end
 
-    test "captures also the raw email as attachment" do
-      mail = Mail.new do
-        from "sender@example.com"
-        to "receiver@example.com"
-        subject "Hello"
-        body "This is a plain text message"
-        add_file(filename: "test.txt", content: "This is a test file")
+    unless ENV["DISABLE_ACTIVESTORAGE"] == "true"
+      test "captures also the raw email as attachment" do
+        mail = Mail.new do
+          from "sender@example.com"
+          to "receiver@example.com"
+          subject "Hello"
+          body "This is a plain text message"
+          add_file(filename: "test.txt", content: "This is a test file")
+        end
+
+        Observer.delivered_email(mail)
+
+        email = EmailMessage.last
+        assert_equal email.attachments.length, 1
+        assert email.raw_email.present?
       end
-
-      Observer.delivered_email(mail)
-
-      email = EmailMessage.last
-      assert_equal email.attachments.length, 1
-      assert email.raw_email.present?
     end
   end
 end
