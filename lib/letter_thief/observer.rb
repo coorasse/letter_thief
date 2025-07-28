@@ -33,6 +33,7 @@ module LetterThief
           content_type: "message/rfc822"
         )
       end
+      email
     rescue => e
       Rails.logger.error("[LetterThief] Failed to store observed email: #{e.message}")
     end
