@@ -10,6 +10,11 @@ module LetterThief
     puts "Database: #{ActiveRecord::Base.connection.current_database rescue 'N/A'}"
     puts "Config: #{ActiveRecord::Base.connection_db_config.inspect}"
     puts "Tables: #{ActiveRecord::Base.connection.tables.inspect}"
+    cfg = ActiveRecord::Base.connection_db_config.configuration_hash
+    puts "Adapter:  #{cfg[:adapter]}"
+    puts "Database: #{cfg[:database]}"
+    puts "Pool:     #{cfg[:pool]}"
+    puts "Timeout:  #{cfg[:timeout]}"
     if ActiveRecord::Base.connection.table_exists?("active_storage_attachments")
       has_many_attached :attachments
       has_one_attached :raw_email
