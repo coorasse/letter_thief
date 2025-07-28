@@ -48,7 +48,31 @@ jobs:
           RAILS_ENV: test
           TARGET_DB: sqlite
         run: bin/rails test
-      - name: Run sqlite tests without ActiveStorage
+
+  sqlite_without_activestorage_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config google-chrome-stable
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.1
+          bundler-cache: true
+
+      - name: Setup database
+        env:
+          RAILS_ENV: test
+          TARGET_DB: sqlite
+          DISABLE_ACTIVESTORAGE: true
+        run: bin/rails db:create db:migrate
+
+      - name: Run sqlite tests
         env:
           RAILS_ENV: test
           TARGET_DB: sqlite
