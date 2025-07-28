@@ -13,3 +13,8 @@ if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
   ActiveSupport::TestCase.file_fixture_path = File.expand_path("fixtures", __dir__) + "/files"
   ActiveSupport::TestCase.fixtures :all
 end
+
+if ENV['DISABLE_ACTIVESTORAGE'] == "true"
+  # drop activestorage tables
+  ActiveRecord::Base.connection.drop_table :active_storage_attachments, if_exists: true
+end

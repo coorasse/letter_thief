@@ -48,6 +48,12 @@ jobs:
           RAILS_ENV: test
           TARGET_DB: sqlite
         run: bin/rails test
+      - name: Run sqlite tests without ActiveStorage
+        env:
+          RAILS_ENV: test
+          TARGET_DB: sqlite
+          DISABLE_ACTIVESTORAGE: true
+        run: bin/rails test
 
   mysql_tests:
     runs-on: ubuntu-latest
