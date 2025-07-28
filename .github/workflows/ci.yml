@@ -41,13 +41,13 @@ jobs:
         env:
           RAILS_ENV: test
           TARGET_DB: sqlite
-        run: bin/rails db:drop db:create db:migrate
+        run: bin/rails db:create db:migrate
 
       - name: Run sqlite tests
         env:
           RAILS_ENV: test
           TARGET_DB: sqlite
-        run:  bin/rails db:drop db:create db:migrate && bin/rails test
+        run: bin/rails test
 
   mysql_tests:
     runs-on: ubuntu-latest
