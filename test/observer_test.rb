@@ -19,7 +19,7 @@ module LetterThief
       assert_equal ["sender@example.com"], email.from
       assert_equal "Hello", email.subject
       assert_equal "This is a plain text message", email.body_text
-      assert_equal nil, email.body_html
+      assert_nil email.body_html
       assert_equal mail.content_type, email.content_type
       refute mail.multipart?
       assert email.intercepted_at.present?
