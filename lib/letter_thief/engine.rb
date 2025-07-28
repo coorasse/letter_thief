@@ -16,5 +16,14 @@ module LetterThief
         ActionMailer::Base.add_delivery_method(:letter_thief, LetterThief::DeliveryMethod)
       end
     end
+
+    initializer "add attachments" do
+      ActiveSupport.on_load(:active_record) do
+        if LetterThief.activestorage_available?
+          EmailMessage.has_many_attached :attachments
+          EmailMessage.has_one_attached :raw_email
+        end
+      end
+    end
   end
 end
