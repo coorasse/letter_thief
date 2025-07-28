@@ -49,7 +49,7 @@ module LetterThief
       assert mail.multipart?
     end
 
-    unless ENV['DISABLE_ACTIVESTORAGE'] == "true"
+    unless ENV["DISABLE_ACTIVESTORAGE"] == "true"
       test "captures also the raw email as attachment" do
         mail = Mail.new do
           from "sender@example.com"
