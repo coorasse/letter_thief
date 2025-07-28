@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    letter_thief (0.3.0)
+    letter_thief (0.3.1)
       rails (>= 7.0)
 
 GEM
