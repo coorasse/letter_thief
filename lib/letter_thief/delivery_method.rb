@@ -7,6 +7,12 @@ module LetterThief
 
     def deliver!(mail)
       delivered_mail = Observer.delivered_email(mail)
+      open_in_browser(delivered_mail) if LetterThief.open_sent_emails
+    end
+
+    private
+
+    def open_in_browser(delivered_mail)
       require "launchy"
       ::Launchy.open(LetterThief::Engine.routes.url_helpers.email_message_url(delivered_mail, Rails.configuration.action_mailer.default_url_options))
     rescue LoadError

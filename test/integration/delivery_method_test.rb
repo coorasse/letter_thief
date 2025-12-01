@@ -1,5 +1,5 @@
 require "test_helper"
-require "minitest/mock"
+require "launchy"
 
 module LetterThief
   class DeliveryMethodTest < ActionDispatch::IntegrationTest
@@ -10,17 +10,32 @@ module LetterThief
       end
     end
 
-    test "creates an EmailMessage even when launchy is not installed" do
-      delivery_method = DeliveryMethod.new
-      require_without_launchy = ->(name) { (name == "launchy") ? raise(LoadError, "cannot load such file -- launchy") : require(name) }
+    test "opens the sent email in the browser by default" do
+      assert LetterThief.open_sent_emails
+      opened_urls = []
+      Launchy.stub(:open, ->(url) { opened_urls << url }) do
+        MyMailer.multipart_mail.deliver_now
+      end
+      assert_equal [email_message_url(EmailMessage.last)], opened_urls
+    end
 
-      delivery_method.stub(:require, require_without_launchy) do
+    test "does not open the sent email when open_sent_emails is false" do
+      LetterThief.open_sent_emails = false
+      opened_urls = []
+      Launchy.stub(:open, ->(url) { opened_urls << url }) do
         assert_difference -> { EmailMessage.count }, 1 do
-          assert_output(/launchy/) do
-            delivery_method.deliver!(MyMailer.multipart_mail.message)
-          end
+          MyMailer.multipart_mail.deliver_now
         end
       end
+      assert_empty opened_urls
+    ensure
+      LetterThief.open_sent_emails = true
+    end
+
+    private
+
+    def email_message_url(email_message)
+      LetterThief::Engine.routes.url_helpers.email_message_url(email_message, Rails.configuration.action_mailer.default_url_options)
     end
   end
 end
