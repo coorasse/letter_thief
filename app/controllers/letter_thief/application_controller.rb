@@ -1,4 +1,4 @@
 module LetterThief
-  class ApplicationController < ActionController::Base
+  class ApplicationController < LetterThief.base_controller_class.constantize
   end
 end
