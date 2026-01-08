@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # allow_browser is only available in Rails 8.0+
+  allow_browser versions: :modern if respond_to?(:allow_browser)
 end
