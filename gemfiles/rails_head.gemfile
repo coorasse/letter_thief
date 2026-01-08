@@ -1,0 +1,19 @@
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "rails", github: "rails/rails", branch: "main"
+gem "minitest", "~> 5.0"
+
+gem "puma"
+gem "propshaft"
+
+gem "sqlite3"
+gem "pg"
+gem "mysql2"
+
+gem "standard"
+
+gem "launchy"
+
+gem "faker"

@@ -23,6 +23,11 @@ jobs:
 
   sqlite_tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rails_version: ['7.1', '7.2', '8.0', 'head']
+    name: SQLite Tests (Rails ${{ matrix.rails_version }})
 
     steps:
       - name: Install packages
@@ -36,21 +41,30 @@ jobs:
         with:
           ruby-version: 3.4.1
           bundler-cache: true
+        env:
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
 
       - name: Setup database
         env:
           RAILS_ENV: test
           TARGET_DB: sqlite
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails db:create db:migrate
 
       - name: Run sqlite tests
         env:
           RAILS_ENV: test
           TARGET_DB: sqlite
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails test
 
   sqlite_without_activestorage_tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rails_version: ['7.1', '7.2', '8.0', 'head']
+    name: SQLite Tests without ActiveStorage (Rails ${{ matrix.rails_version }})
 
     steps:
       - name: Install packages
@@ -64,12 +78,15 @@ jobs:
         with:
           ruby-version: 3.4.1
           bundler-cache: true
+        env:
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
 
       - name: Setup database
         env:
           RAILS_ENV: test
           TARGET_DB: sqlite
           DISABLE_ACTIVESTORAGE: true
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails db:create db:migrate
 
       - name: Run sqlite tests
@@ -77,10 +94,16 @@ jobs:
           RAILS_ENV: test
           TARGET_DB: sqlite
           DISABLE_ACTIVESTORAGE: true
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails test
 
   mysql_tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rails_version: ['7.1', '7.2', '8.0', 'head']
+    name: MySQL Tests (Rails ${{ matrix.rails_version }})
     services:
       mysql:
         image: mysql:8.0
@@ -106,12 +129,15 @@ jobs:
         with:
           ruby-version: 3.4.1
           bundler-cache: true
+        env:
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
 
       - name: Setup database
         env:
           RAILS_ENV: test
           TARGET_DB: mysql
           DATABASE_URL: mysql2://root:password@127.0.0.1:3306/test_db
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails db:drop db:create db:migrate
 
       - name: Run mysql tests
@@ -119,10 +145,16 @@ jobs:
           RAILS_ENV: test
           TARGET_DB: mysql
           DATABASE_URL: mysql2://root:password@127.0.0.1:3306/test_db
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails test
 
   postgres_tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rails_version: ['7.1', '7.2', '8.0', 'head']
+    name: PostgreSQL Tests (Rails ${{ matrix.rails_version }})
     services:
       postgres:
         image: postgres:15
@@ -150,12 +182,15 @@ jobs:
         with:
           ruby-version: 3.4.1
           bundler-cache: true
+        env:
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
 
       - name: Setup database
         env:
           RAILS_ENV: test
           TARGET_DB: postgres
           DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails db:drop db:create db:migrate
 
       - name: Run postgres tests
@@ -163,4 +198,5 @@ jobs:
           RAILS_ENV: test
           TARGET_DB: postgres
           DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+          BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
         run: bin/rails test
