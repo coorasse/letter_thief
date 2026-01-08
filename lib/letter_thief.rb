@@ -3,6 +3,8 @@ require "letter_thief/engine"
 
 module LetterThief
   mattr_accessor :connects_to
+  mattr_accessor :observer_enabled
+  self.observer_enabled = true
 
   def self.used_activestorage_space
     ActiveStorage::Blob
