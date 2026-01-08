@@ -92,6 +92,16 @@ development:
     migrations_paths: db/letter_thief_migrate
 ```
 
+### Enable/Disable Observer
+
+By default, LetterThief observes all emails sent by your application and logs them to the database. You can disable this behavior by setting:
+
+```ruby
+LetterThief.observer_enabled = false
+```
+
+This is useful when you want to disable email logging in production or only enable it when debugging specific issues. You can configure this per environment in `config/environments/production.rb` or toggle it dynamically in the Rails console.
+
 ## Varia
 
 > [!NOTE]

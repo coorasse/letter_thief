@@ -6,7 +6,7 @@ module LetterThief
     isolate_namespace LetterThief
 
     initializer "letter_thief.add_observer" do
-      unless Rails.application.config.action_mailer.delivery_method == :letter_thief
+      if LetterThief.observer_enabled && Rails.application.config.action_mailer.delivery_method != :letter_thief
         ActiveSupport.on_load(:action_mailer) do
           ActionMailer::Base.register_observer(LetterThief::Observer)
         end
