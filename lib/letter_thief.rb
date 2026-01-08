@@ -6,7 +6,6 @@ module LetterThief
   mattr_accessor :base_controller_class, default: "::ApplicationController"
   mattr_accessor :observer_enabled, default: true
 
-
   def self.used_activestorage_space
     ActiveStorage::Blob
       .joins(:attachments)
