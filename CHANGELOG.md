@@ -4,6 +4,10 @@
 * Add basic tasks for cleaning up.
 * Run tests on different ruby/rails/database combinations.
 
+# 0.4.0
+
+* Fix email_messages#show page when ActiveStorage is not available. (#26)
+
 # 0.3.1
 
 * Fix email_messages#show page when ActiveStorage is not available. 
