@@ -57,6 +57,24 @@ authenticate :user, ->(user) { user&.administrator? } do
 end
 ```
 
+### Authentication
+
+Alternatively, you can provide your own authentication mechanism by specifying a different controller as the base class
+for LetterThief's controllers. By default, LetterThief's controllers extend `::ApplicationController`, but you can change
+this easily:
+
+```ruby
+# config/initializers/letter_thief.rb
+Rails.application.configure do
+  LetterThief.base_controller_class = "AdminController"
+end
+```
+
+This is useful if you have a custom controller (like `AdminController`) that already handles authentication via
+`before_action` callbacks.
+
+### Delivery Method
+
 If you want to stop sending emails, you can use it also as delivery method:
 
 ```ruby
@@ -132,7 +150,6 @@ TARGET_DB=mysql bin/test #mysql
 ```
 
 You can also sping up a dummy app with `bin/rails server` and work there.
-
 
 ## Contributing
 

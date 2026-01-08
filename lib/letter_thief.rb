@@ -3,8 +3,9 @@ require "letter_thief/engine"
 
 module LetterThief
   mattr_accessor :connects_to
-  mattr_accessor :observer_enabled
-  self.observer_enabled = true
+  mattr_accessor :base_controller_class, default: "::ApplicationController"
+  mattr_accessor :observer_enabled, default: true
+
 
   def self.used_activestorage_space
     ActiveStorage::Blob

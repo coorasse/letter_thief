@@ -7,6 +7,7 @@
 # 0.4.1
 
 * Add `LetterThief.observer_enabled` option
+* Add `LetterThief.base_controller_class` option.
 
 # 0.4.0
 
