@@ -1,4 +1,4 @@
-class CreateLetterThiefEmailMessages < ActiveRecord::Migration[7.2]
+class CreateLetterThiefEmailMessages < ActiveRecord::Migration[7.0]
   def change
     adapter = ActiveRecord::Base.connection.adapter_name.downcase
 
