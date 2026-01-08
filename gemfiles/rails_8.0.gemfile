@@ -1,0 +1,18 @@
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "rails", "~> 8.0.0"
+
+gem "puma"
+gem "propshaft"
+
+gem "sqlite3"
+gem "pg"
+gem "mysql2"
+
+gem "standard"
+
+gem "launchy"
+
+gem "faker"
