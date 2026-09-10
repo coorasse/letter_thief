@@ -4,6 +4,10 @@
 * Add basic tasks for cleaning up.
 * Run tests on different ruby/rails/database combinations.
 
+# Unreleased
+
+* Fix emails not being persisted when the `launchy` gem is not installed. (#73)
+
 # 0.4.1
 
 * Add `LetterThief.observer_enabled` option
