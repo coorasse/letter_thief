@@ -16,7 +16,7 @@ module LetterThief
       scope = EmailMessage.order(intercepted_at: :desc)
 
       if query.present?
-        adapter = ActiveRecord::Base.connection.adapter_name.downcase
+        adapter = EmailMessage.connection.adapter_name.downcase
         scope = if adapter.include?("postgresql")
           scope.where(<<~SQL.squish, q: "%#{query}%")
             subject ILIKE :q

@@ -9,4 +9,5 @@
 /test/dummy/storage/
 /test/dummy/tmp/
 /test/dummy/db/schema.rb
+/test/dummy/db/letter_thief_schema.rb
 *.gem

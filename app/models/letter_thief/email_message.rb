@@ -2,14 +2,12 @@ module LetterThief
   class EmailMessage < ApplicationRecord
     self.table_name = "letter_thief_email_messages"
 
-    connects_to(**LetterThief.connects_to) if LetterThief.connects_to
-
     if LetterThief.activestorage_available?
       has_many_attached :attachments
       has_one_attached :raw_email
     end
 
-    unless ActiveRecord::Base.connection.adapter_name.downcase.include?("postgresql")
+    unless connection.adapter_name.downcase.include?("postgresql")
       serialize :to, coder: JSON, type: Array
       serialize :from, coder: JSON, type: Array
       serialize :sender, coder: JSON, type: Array

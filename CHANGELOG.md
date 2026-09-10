@@ -10,6 +10,8 @@
 
 # 0.4.1
 
+* Fix `LetterThief.connects_to` raising `NotImplementedError`: `connects_to` is now declared on the abstract
+  `LetterThief::ApplicationRecord`.
 * Add `LetterThief.observer_enabled` option
 * Add `LetterThief.base_controller_class` option.
 

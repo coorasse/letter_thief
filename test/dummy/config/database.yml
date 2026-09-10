@@ -23,10 +23,38 @@ default: &default
   timeout: 60
 <% end %>
 
+<% if ENV["LETTER_THIEF_SEPARATE_DB"] == "true" %>
+development:
+  primary:
+    <<: *default
+    database: <%= database_name_from("development") %>
+    migrations_paths: <%= Rails.root.join("db/migrate") %>
+  letter_thief:
+    <<: *default
+    database: <%= database_name_from("letter_thief_development") %>
+    migrations_paths: <%= Rails.root.join("db/letter_thief_migrate") %>
+
+test:
+  primary:
+    <<: *default
+    database: <%= database_name_from("test") %>
+    migrations_paths: <%= Rails.root.join("db/migrate") %>
+  letter_thief:
+    <<: *default
+    database: <%= database_name_from("letter_thief_test") %>
+    migrations_paths: <%= Rails.root.join("db/letter_thief_migrate") %>
+<% else %>
 development:
   <<: *default
   database: <%= database_name_from("development") %>
+  migrations_paths:
+    - <%= Rails.root.join("db/migrate") %>
+    - <%= Rails.root.join("db/letter_thief_migrate") %>
 
 test:
   <<: *default
   database: <%= database_name_from("test") %>
+  migrations_paths:
+    - <%= Rails.root.join("db/migrate") %>
+    - <%= Rails.root.join("db/letter_thief_migrate") %>
+<% end %>
