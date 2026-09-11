@@ -1,5 +1,6 @@
 require "test_helper"
 require "launchy"
+require "minitest/mock"
 
 module LetterThief
   class DeliveryMethodTest < ActionDispatch::IntegrationTest

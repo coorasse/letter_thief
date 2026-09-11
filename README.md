@@ -26,7 +26,7 @@ If you used `letter_opener` in the past you know how nice it is to have
 the sent emails opened automatically in your Browser when working locally.
 LetterThief supports this as well with the very same mechanism, but `launchy` is not a direct dependency.
 If you add Launchy on your Gemfile, emails will be opened right away once sent.
-This can be prevented by setting the environment variable `LETTER_THIEF_OPEN_SENT_EMAILS=false`.
+This can be disabled with `LetterThief.open_sent_emails = false`.
 
 Since emails are persisted on the Database it means you can use this also on Heroku, deplo.io, or other PaaS where you
 don't have a disk. No need for an external service like Mailtrap (amazing service!) anymore.
@@ -91,7 +91,15 @@ group :development do
 end
 ```
 
-and LetterThief will open emails directly in your Browser like Letter Opener, unless the environment variable `LETTER_THIEF_OPEN_SENT_EMAILS` is set to a falsey value.
+and LetterThief will open emails directly in your Browser like Letter Opener.
+
+If `launchy` is in your Gemfile for other reasons and you don't want emails to be opened automatically, you can disable
+it:
+
+```ruby
+# config/initializers/letter_thief.rb
+LetterThief.open_sent_emails = false
+```
 
 ### Separate database
 
