@@ -4,14 +4,11 @@
 * Add basic tasks for cleaning up.
 * Run tests on different ruby/rails/database combinations.
 
-# Unreleased
-
-* Fix emails not being persisted when the `launchy` gem is not installed. (#73)
-
-# 0.4.1
+# 0.5.0
 
 * Add `LetterThief.open_sent_emails` option to prevent the delivery method from opening sent emails in the browser
   when `launchy` is installed. (#61)
+* Fix emails not being persisted when the `launchy` gem is not installed. (#73)
 * Fix `LetterThief.connects_to` raising `NotImplementedError`: `connects_to` is now declared on the abstract
   `LetterThief::ApplicationRecord`.
 * Add `LetterThief.observer_enabled` option
