@@ -10,6 +10,8 @@
 
 # 0.4.1
 
+* Add `LetterThief.open_sent_emails` option to prevent the delivery method from opening sent emails in the browser
+  when `launchy` is installed. (#61)
 * Fix `LetterThief.connects_to` raising `NotImplementedError`: `connects_to` is now declared on the abstract
   `LetterThief::ApplicationRecord`.
 * Add `LetterThief.observer_enabled` option

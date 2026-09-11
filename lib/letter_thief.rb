@@ -5,6 +5,7 @@ module LetterThief
   mattr_accessor :connects_to
   mattr_accessor :base_controller_class, default: "::ApplicationController"
   mattr_accessor :observer_enabled, default: true
+  mattr_accessor :open_sent_emails, default: true
 
   def self.used_activestorage_space
     ActiveStorage::Blob
