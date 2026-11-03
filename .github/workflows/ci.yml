@@ -15,7 +15,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
 
       - name: Lint code for consistent style
@@ -39,7 +39,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -76,7 +76,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -115,7 +115,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -166,7 +166,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -219,7 +219,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
