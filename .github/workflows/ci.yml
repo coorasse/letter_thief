@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -22,7 +22,7 @@ jobs:
         run: bundle exec standardrb
 
   sqlite_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -59,7 +59,7 @@ jobs:
         run: bin/rails test
 
   sqlite_without_activestorage_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -98,7 +98,7 @@ jobs:
         run: bin/rails test
 
   sqlite_separate_database_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -137,7 +137,7 @@ jobs:
         run: bin/rails test
 
   mysql_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -188,7 +188,7 @@ jobs:
         run: bin/rails test
 
   postgres_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
