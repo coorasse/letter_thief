@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -15,18 +15,18 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
 
       - name: Lint code for consistent style
         run: bundle exec standardrb
 
   sqlite_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        rails_version: ['7.1', '7.2', '8.0', 'head']
+        rails_version: ['7.1', '7.2', '8.0', '8.1', 'head']
     name: SQLite Tests (Rails ${{ matrix.rails_version }})
 
     steps:
@@ -39,7 +39,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -59,11 +59,11 @@ jobs:
         run: bin/rails test
 
   sqlite_without_activestorage_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        rails_version: ['7.1', '7.2', '8.0', 'head']
+        rails_version: ['7.1', '7.2', '8.0', '8.1', 'head']
     name: SQLite Tests without ActiveStorage (Rails ${{ matrix.rails_version }})
 
     steps:
@@ -76,7 +76,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -98,11 +98,11 @@ jobs:
         run: bin/rails test
 
   sqlite_separate_database_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        rails_version: ['7.1', '7.2', '8.0', 'head']
+        rails_version: ['7.1', '7.2', '8.0', '8.1', 'head']
     name: SQLite Tests with separate database (Rails ${{ matrix.rails_version }})
 
     steps:
@@ -115,7 +115,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -137,11 +137,11 @@ jobs:
         run: bin/rails test
 
   mysql_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        rails_version: ['7.1', '7.2', '8.0', 'head']
+        rails_version: ['7.1', '7.2', '8.0', '8.1', 'head']
     name: MySQL Tests (Rails ${{ matrix.rails_version }})
     services:
       mysql:
@@ -166,7 +166,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
@@ -188,11 +188,11 @@ jobs:
         run: bin/rails test
 
   postgres_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        rails_version: ['7.1', '7.2', '8.0', 'head']
+        rails_version: ['7.1', '7.2', '8.0', '8.1', 'head']
     name: PostgreSQL Tests (Rails ${{ matrix.rails_version }})
     services:
       postgres:
@@ -219,7 +219,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.8
           bundler-cache: true
         env:
           BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails_version }}.gemfile
