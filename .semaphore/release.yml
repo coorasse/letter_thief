@@ -1,0 +1,21 @@
+version: v1.0
+name: release
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2404
+
+blocks:
+  - name: release
+    task:
+      secrets:
+        - name: rubygems
+      jobs:
+        - name: gem push
+          commands:
+            - checkout --use-cache
+            - sem-version ruby 3.4.8 -f
+            - VERSION=$(ruby -e "puts Gem::Specification.load('letter_thief.gemspec').version")
+            - test "$VERSION" = "$SEMAPHORE_GIT_TAG_NAME"
+            - gem build letter_thief.gemspec
+            - gem push letter_thief-$VERSION.gem
