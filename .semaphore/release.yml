@@ -9,7 +9,7 @@ blocks:
   - name: release
     task:
       secrets:
-        - name: rubygems
+        - name: letter_thief
       jobs:
         - name: gem push
           commands:
