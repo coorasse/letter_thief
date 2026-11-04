@@ -1,8 +1,11 @@
 # TODO
 
-* Add support for separate database.
 * Add basic tasks for cleaning up.
-* Run tests on different ruby/rails/database combinations.
+
+# 1.0.0
+
+* First stable release. No breaking changes since 0.5.0.
+* Test against Rails 8.1. (#101)
 
 # 0.5.0
 
