@@ -4,6 +4,7 @@ set -euo pipefail
 
 export RAILS_ENV=test
 rm -f test/dummy/db/schema.rb
-bin/rails db:drop db:create db:migrate
+bin/rails db:drop
+bin/rails db:create db:migrate
 bin/rails test
 rm -f test/dummy/db/schema.rb
