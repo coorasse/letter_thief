@@ -58,7 +58,7 @@ blocks:
         - name: TARGET_DB
           value: sqlite
         - name: DISABLE_ACTIVESTORAGE
-          value: true
+          value: "true"
       jobs:
         - name: sqlite without activestorage
           matrix:
@@ -80,7 +80,7 @@ blocks:
         - name: TARGET_DB
           value: sqlite
         - name: LETTER_THIEF_SEPARATE_DB
-          value: true
+          value: "true"
       jobs:
         - name: sqlite separate database
           matrix:
