@@ -1,0 +1,146 @@
+version: "v1.0"
+name: letter_thief
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2404
+auto_cancel:
+  running:
+    when: "true"
+
+global_job_config:
+  prologue:
+    commands:
+      - checkout --use-cache
+      - sem-version ruby 3.4.8 -f
+      - export BUNDLE_GEMFILE=$PWD/${BUNDLE_GEMFILE:-Gemfile}
+      - cache restore gems-$(basename $BUNDLE_GEMFILE)-$(checksum letter_thief.gemspec)
+      - bundle config set path vendor/bundle
+      - bundle install -j 4
+      - cache store gems-$(basename $BUNDLE_GEMFILE)-$(checksum letter_thief.gemspec) vendor/bundle
+
+blocks:
+  - name: lint
+    dependencies: []
+    execution_time_limit:
+      minutes: 5
+    task:
+      jobs:
+        - name: fastcheck
+          commands:
+            - bin/fastcheck
+  - name: sqlite
+    dependencies: []
+    execution_time_limit:
+      minutes: 15
+    task:
+      env_vars:
+        - name: TARGET_DB
+          value: sqlite
+      jobs:
+        - name: sqlite
+          matrix:
+            - env_var: BUNDLE_GEMFILE
+              values:
+                - gemfiles/rails_7.1.gemfile
+                - gemfiles/rails_7.2.gemfile
+                - gemfiles/rails_8.0.gemfile
+                - gemfiles/rails_8.1.gemfile
+                - gemfiles/rails_head.gemfile
+          commands:
+            - bin/check
+  - name: sqlite without activestorage
+    dependencies: []
+    execution_time_limit:
+      minutes: 15
+    task:
+      env_vars:
+        - name: TARGET_DB
+          value: sqlite
+        - name: DISABLE_ACTIVESTORAGE
+          value: true
+      jobs:
+        - name: sqlite without activestorage
+          matrix:
+            - env_var: BUNDLE_GEMFILE
+              values:
+                - gemfiles/rails_7.1.gemfile
+                - gemfiles/rails_7.2.gemfile
+                - gemfiles/rails_8.0.gemfile
+                - gemfiles/rails_8.1.gemfile
+                - gemfiles/rails_head.gemfile
+          commands:
+            - bin/check
+  - name: sqlite separate database
+    dependencies: []
+    execution_time_limit:
+      minutes: 15
+    task:
+      env_vars:
+        - name: TARGET_DB
+          value: sqlite
+        - name: LETTER_THIEF_SEPARATE_DB
+          value: true
+      jobs:
+        - name: sqlite separate database
+          matrix:
+            - env_var: BUNDLE_GEMFILE
+              values:
+                - gemfiles/rails_7.1.gemfile
+                - gemfiles/rails_7.2.gemfile
+                - gemfiles/rails_8.0.gemfile
+                - gemfiles/rails_8.1.gemfile
+                - gemfiles/rails_head.gemfile
+          commands:
+            - bin/check
+  - name: mysql
+    dependencies: []
+    execution_time_limit:
+      minutes: 15
+    task:
+      env_vars:
+        - name: TARGET_DB
+          value: mysql
+        - name: DATABASE_URL
+          value: "mysql2://root:password@127.0.0.1:3306/test_db"
+      jobs:
+        - name: mysql
+          matrix:
+            - env_var: BUNDLE_GEMFILE
+              values:
+                - gemfiles/rails_7.1.gemfile
+                - gemfiles/rails_7.2.gemfile
+                - gemfiles/rails_8.0.gemfile
+                - gemfiles/rails_8.1.gemfile
+                - gemfiles/rails_head.gemfile
+          commands:
+            - sem-service start mysql 8.0 --username=root --password=password --db=test_db
+            - bin/check
+  - name: postgres
+    dependencies: []
+    execution_time_limit:
+      minutes: 15
+    task:
+      env_vars:
+        - name: TARGET_DB
+          value: postgres
+        - name: DATABASE_URL
+          value: "postgres://postgres:password@localhost:5432/test_db"
+      jobs:
+        - name: postgres
+          matrix:
+            - env_var: BUNDLE_GEMFILE
+              values:
+                - gemfiles/rails_7.1.gemfile
+                - gemfiles/rails_7.2.gemfile
+                - gemfiles/rails_8.0.gemfile
+                - gemfiles/rails_8.1.gemfile
+                - gemfiles/rails_head.gemfile
+          commands:
+            - sem-service start postgres 15 --username=postgres --password=password --db=test_db
+            - bin/check
+promotions:
+  - name: release
+    pipeline_file: release.yml
+    auto_promote:
+      when: "result = 'passed' and tag =~ '^[0-9]+[.][0-9]+[.][0-9]+$'"
